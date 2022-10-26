@@ -1,5 +1,5 @@
 import { ActionIcon, useMantineColorScheme } from "@mantine/core"
-import {IconSun, IconMoonStars} from "@tabler/icons";
+import { IconSun, IconMoonStars } from "@tabler/icons";
 
 function LightAndDarkModeButton() {
 
