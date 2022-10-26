@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { AppShell, Navbar,Header, Footer, Aside, Text, MediaQuery, Burger, useMantineTheme } from '@mantine/core';
+import { AppShell, Navbar, Header, Footer, Aside, Text, MediaQuery, Burger, useMantineTheme } from '@mantine/core';
 import LightAndDarkModeButton from './LightDarkButton';
-import TableExample from './TableExample';
+// import TableExample from './TableExample';
+import CandidateForm from './CandidateForm';
 
 function AppShellLayout() {
   const theme = useMantineTheme();
@@ -16,10 +17,11 @@ function AppShellLayout() {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       navbar={
-        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 200 }}>
           <Navbar.Section>
             <Text>Greetings, this is the Title</Text>
           </Navbar.Section>
+            <LightAndDarkModeButton />
           <Navbar.Section grow mt="lg" >
             <Text>Example 1</Text>
             <Text>Example 2</Text>
@@ -34,7 +36,7 @@ function AppShellLayout() {
       }
       aside={
         <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
-          <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
+          <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 200 }}>
             <Text>Application sidebar</Text>
           </Aside>
         </MediaQuery>
@@ -63,7 +65,8 @@ function AppShellLayout() {
         </Header>
       }
     >
-      <TableExample />
+      {/* <TableExample /> */}
+      <CandidateForm />
     </AppShell>
   );
 }
