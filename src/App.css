@@ -39,3 +39,22 @@
 .read-the-docs {
   color: #888;
 }
+
+.Candidate-Form-Title {
+  display: flex;
+  justify-content: center;
+  font-size: 3.5rem;
+  font-weight: 600;
+  margin-bottom: 1.0rem;
+  font-family: "Raleway", sans-serif;
+  color: cyan
+}
+
+.font-Color {
+  color: cyan
+}
+
+.font-Bold {
+  font-weight: 500;
+}
+
