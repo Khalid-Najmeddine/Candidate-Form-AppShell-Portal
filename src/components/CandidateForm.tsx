@@ -1,179 +1,389 @@
-import { Grid, TextInput, MantineProvider, Button, ColorScheme, ColorSchemeProvider } from "@mantine/core";
+import { Grid, TextInput, MantineProvider, Button, ColorScheme, ColorSchemeProvider, Group, Checkbox, Textarea, ColorInput, Avatar, Text, Select } from "@mantine/core";
+import { forwardRef } from "react";
 import { useLocalStorage, useHotkeys } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
+import { GiOverlordHelm, GiDevilMask } from "react-icons/gi";
+
+enum EnumCandidateImmigrationStatusType {
+  CanadianCitizen,
+  ExpressEntryPool,
+  PermanentResident,
+  RequiringVisaSponsorship,
+  StudentVisa,
+  TemporaryForeignWorkPermit,
+  Unknown,
+  Withheld
+}
+
+const selectData = [
+	{
+    image: "https://dfimmigration.ca/wp-content/uploads/2019/12/CITIZENSHIP-CERTIFICATE-v4.jpg",
+		value: "CanadianCitizen",
+		label: "Canadian Citizen",
+    description: "A proud and patriotic Canadian Citizen"
+	},
+{
+    image: "https://www.africanada.com/wp-content/uploads/2020/09/image-26.png",
+		value: "ExpressEntryPool",
+		label: "Express Entry Pool",
+    description:"A candidate who has applied for permanent residence through the Express Entry system"
+	},		
+{ 
+    image:"https://www.myvisasource.com/hubfs/Compressed%20Blog%20Images/200kb/How%20Permanent%20Resident%20Card%20Applications%20Work%20In%20Canada%20-%20200.webp",
+    value: "PermanentResident",
+    label: "Permanent Resident",
+    description: "A candidate who has been granted permanent residence in Canada"
+  },
+{
+    image:"https://n2k3y9s6.stackpathcdn.com/wp-content/uploads/2022/09/high-commission-of-united-states-scholarships-2023-fully-funded-30-min.png",
+    value: "RequiringVisaSponsorship",
+    label: "Requiring Visa Sponsorship",
+    description: "A candidate who requires a visa to work in Canada"
+  },
+{
+    image:"https://cdn.aussizzgroup.com/sitecontent/images/BL_study-guide-to-canada-for-overseas-students.jpg",
+    value: "StudentVisa",
+    label: "Student Visa",
+    description: "A candidate who is studying in Canada"
+  },
+{
+    image:"https://i.ytimg.com/vi/9DJuJQ9w7Oo/maxresdefault.jpg",
+    value: "TemporaryForeignWorkPermit",
+    label: "Temporary Foreign Work Permit",
+    description: "A candidate who is working in Canada"
+  },
+{
+    image:"https://flxt.tmsimg.com/assets/p8214163_p_v8_ag.jpg",
+    value: "Unknown",
+    label: "Unknown",
+    description: "A candidate whose immigration status is unknown"
+  },
+{
+    image:"https://www.bellissimolawgroup.com/wp-content/uploads/2021/10/MDB-Blog-refusal.jpg",
+    value: "Withheld",
+    label: "Withheld",
+    description: "A candidate whose immigration status is witiheld"
+  }
+];
+interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
+  image: string;
+  label: string;
+  description: string;
+}
+
+const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ image, label, description, ...others }: ItemProps, ref) => (
+    <div ref={ref} {...others}>
+      <Group noWrap>
+        <Avatar src={image} />
+
+        <div>
+          <Text size="sm">{label}</Text>
+          <Text size="xs" color="dimmed">
+            {description}
+          </Text>
+        </div>
+      </Group>
+    </div>
+  )
+);
 
 function CandidateForm() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
-    key: 'mantine-color-scheme',
-    defaultValue: 'light',
+    key: "mantine-color-scheme",
+    defaultValue: "light",
     getInitialValueInEffect: true,
   });
 
   const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
-  useHotkeys([['mod+J', () => toggleColorScheme()]]);
-  
+  useHotkeys([["mod+J", () => toggleColorScheme()]]);
+
+  const form = useForm({
+    initialValues: {
+      email: "",
+      emailAlt: "",
+      firstName: "",
+      githubUrl: "",
+      id: "",
+      immigrationStatusType: "",
+      isEmailAuthorized: false,
+      isGTAAuthorized: false,
+      isWillingToWorkRemote: false,
+      lastName: "",
+      linkedinUrl: "",
+      phone: "",
+      phoneAlt: "",
+      source: "",
+      termsOfService: false,
+    },
+    validate: {
+      email: (value) => {
+        return value.length > 0 ? undefined : "Email is required";
+      },
+      emailAlt: (value) => {
+        return value.length > 0 ? undefined : "Email is required";
+      },
+      firstName: (value) => {
+        return value.length > 0 ? undefined : "First name is required";
+      },
+      githubUrl: (value) => {
+        return value.length > 0 ? undefined : "Github URL is required";
+      },
+      id: (value) => {
+        return value.length > 0 ? undefined : "Id is required";
+      },
+      immigrationStatusType: (value) => {
+        return value.length > 0
+          ? undefined
+          : "Immigration status type is required";
+      },
+      isEmailAuthorized: (value: boolean) => {
+        return value === false ? undefined : null;
+      },
+      isGTAAuthorized: (value: boolean) => {
+        return value === false ? undefined : null;
+      },
+      isWillingToWorkRemote: (value: boolean) => {
+        return value === false ? undefined : null;
+      },
+      lastName: (value) => {
+        return value.length > 0 ? undefined : "Last name is required";
+      },
+      linkedinUrl: (value) => {
+        return value.length > 0 ? undefined : "Linkedin URL is required";
+      },
+      phone: (value) => {
+        return value.length > 0 ? undefined : "Phone is required";
+      },
+      phoneAlt: (value) => {
+        return value.length > 0 ? undefined : "Phone is required";
+      },
+      source: (value) => {
+        return value.length > 0 ? undefined : "Source is required";
+      },
+    },
+  });
+
   return (
-    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-    <MantineProvider
-      theme={{
-        components: {
-          InputWrapper: {
-            defaultProps: {
-              inputWrapperOrder: ["label", "error", "input", "description"],
-            },
-          },
-
-          Input: {
-            defaultProps: {
-              variant: "filled",
-            },
-          },
-        },
-      }}
+    <ColorSchemeProvider
+      colorScheme={colorScheme}
+      toggleColorScheme={toggleColorScheme}
     >
-      <Grid>
-        <Grid.Col md={6} lg={6} >
-        <TextInput 
-          label="Candidate Form Creation Date"
-          placeholder="Candidate Form Creation Date"
-          description="When was this candidate form created?"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Email Address"
-          placeholder="Email Address"
-          description="What is the candidate's email address?"
-          required
-        />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Alternate Email Address"
-          placeholder="Alternate Email Address"
-          description="What is the candidate's alternate email address?"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="First Name"
-          placeholder="Enter your first name"
-          description="Enter your first name"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Last Name"
-          placeholder="Enter your last name"
-          description="Enter your last name"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Insert GitHub URL"
-          placeholder="Insert GitHub URL"
-          description="Insert GitHub URL"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Insert ID Number"
-          placeholder="Enter your ID Number"
-          description="Enter your ID Number"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Immigration Status Type"
-          placeholder="Enter your Immigration Status Type"
-          description="Enter your Immigration Status Type"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Is Candidate Email Authorized?"
-          placeholder="Is Candidate Email Authorized?"
-          description="Is Candidate Email Authorized?"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Is Candidate GTA Email/ID Authorized?"
-          placeholder="Is Candidate GTA Email/ID Authorized?"
-          description="Is Candidate GTA Email/ID Authorized?"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Is Candidate Willing to Work Remotely?"
-          placeholder=" Is Candidate Willing to Work Remotely?" 
-          description=" Is Candidate Willing to Work Remotely?" 
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Insert LinkedIn URL"
-          placeholder="Insert LinkedIn URL"
-          description="Insert LinkedIn URL"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Phone Number"
-          placeholder="Enter your Phone Number"
-          description="Enter your Phone Number"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Alternate Phone Number"
-          placeholder="Enter your Alternate Phone Number"
-          description="Enter your Alternate Phone Number"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="Enumerate Candidate Source?"
-          placeholder="Enumerate Candidate Source?"
-          description="Enumerate Candidate Source?"
-          required
-          />
-        </Grid.Col>
-        <Grid.Col md={6} lg={6}>
-        <TextInput 
-          label="When was this candidate form updated?"
-          placeholder="When was this candidate form updated?"
-          description="When was this candidate form updated?"
-          required
-          />
-        </Grid.Col>
-      </Grid>
-      <Button type="submit" mt="sm">
-        Submit Candidate Form
-      </Button>
-      <Button type="submit" mt="sm" color="green">
-        Update Candidate Form
-      </Button>
-      <Button type="submit" mt="sm" color="red">
-        Delete Candidate Form
-      </Button>
-    </MantineProvider>
+      <MantineProvider
+        theme={{
+          components: {
+            InputWrapper: {
+              defaultProps: {
+                inputWrapperOrder: ["label", "error", "input", "description"],
+              },
+            },
+            Input: {
+              defaultProps: {
+                variant: "filled",
+              },
+            },
+          },
+        }}
+      >
+            <form onSubmit={form.onSubmit((values) => console.log(values))}>
+              <h1 className="Candidate-Form-Title">Candidate Form</h1>
+                {/* <ColorInput defaultValue="#0de0fc" /> */}
+              <Grid>
+                <Grid.Col lg={6}>
+                  <TextInput
+                    withAsterisk
+                    type="text"
+                    label="First Name"
+                    placeholder="Enter your first name"
+                    required
+                    {...form.getInputProps("firstName")}
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <TextInput
+                    withAsterisk
+                    type="text"
+                    label="Last Name"
+                    placeholder="Enter your last name"
+                    required
+                    {...form.getInputProps("lastName")}
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <TextInput
+                    withAsterisk
+                    type="text"
+                    label="Email"
+                    placeholder="Email Address"
+                    required
+                    {...form.getInputProps("email")}
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <TextInput
+                    withAsterisk
+                    type="text"
+                    label="Alternate Email Address"
+                    placeholder="Alternate Email Address"
+                    required
+                    {...form.getInputProps("emailAlt")}
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <TextInput
+                    withAsterisk
+                    type="text"
+                    label="Phone Number"
+                    placeholder="Enter your Phone Number"
+                    required
+                    {...form.getInputProps("phone")}
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <TextInput
+                    withAsterisk
+                    type="text"
+                    label="Alternate Phone Number"
+                    placeholder="Enter your Alternate Phone Number"
+                    required
+                    {...form.getInputProps("phoneAlt")}
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <TextInput
+                    withAsterisk
+                    type="text"
+                    label="Insert ID Number"
+                    placeholder="Enter your ID Number"
+                    required
+                    {...form.getInputProps("id")}
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <Select
+                    withAsterisk
+                    type="text"
+                    label="Immigration Status Type"
+                    placeholder="Select your Immigration Status Type"
+                    itemComponent={SelectItem}
+                    data={selectData}
+                    searcable
+                    maxDropdownHeight={900}
+                    nothingFound="Nobidy here"
+                    required
+                    {...form.getInputProps("immigrationStatusType")}
+                    filter={(value, item) =>
+                      item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
+                      item.description.toLowerCase().includes(value.toLowerCase().trim())
+                    }
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                   <Checkbox
+                      className="font-Bold"
+                      withAsterisk
+                      mt="md"
+                      label="Is Candidate Email Authorized?"
+                      placeholder="Is Candidate Email Authorized?"
+                      required
+                      {...form.getInputProps("termsOfService", {
+                        type: "checkbox",
+                      })}
+                    />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <Checkbox
+                    className="font-Bold"
+                    withAsterisk
+                    mt="md"
+                    label="Is Candidate GTA Authorized?"
+                    placeholder="Is Candidate GTA Authorized?"
+                    required
+                    {...form.getInputProps("termsOfService", {
+                      type: "checkbox",
+                    })}
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <Checkbox
+                    className="font-Bold"
+                    withAsterisk
+                    mt="md"
+                    label="Is Candidate Willing to Work Remotely?"
+                    placeholder="Is Candidate Willing to Work Remotely?"
+                    required
+                    {...form.getInputProps("termsOfService", {
+                      type: "checkbox",
+                    })}
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <TextInput
+                    withAsterisk
+                    type="text"
+                    label="Enumerate Candidate Source?"
+                    placeholder="Enumerate Candidate Source?"
+                    required
+                    {...form.getInputProps("source")}
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <TextInput
+                    withAsterisk
+                    type="text"
+                    label="Insert LinkedIn URL"
+                    placeholder="Insert LinkedIn URL"
+                    required
+                    {...form.getInputProps("linkedinUrl")}
+                  />
+                </Grid.Col>
+                <Grid.Col lg={6}>
+                  <TextInput
+                    withAsterisk
+                    type="text"
+                    label="Insert GitHub URL"
+                    placeholder="Insert GitHub URL"
+                    required
+                    {...form.getInputProps("githubUrl")}
+                  />
+                </Grid.Col>
+                <Grid.Col >
+                  <Textarea
+                    autosize
+                    minRows={2}
+                    maxRows={4}
+                    label="Notes"
+                    placeholder="Enter your notes here"
+                    {...form.getInputProps("notes")}
+                  />
+                <Checkbox
+                  mt="md"
+                  label="I agree to the terms and conditions. But in reality, I am selling my privacy to the evil overlords."
+                  {...form.getInputProps("termsOfService", {
+                    type: "checkbox",
+                  })}
+                />
+                  <GiOverlordHelm size={55} color="red" />
+                  <GiDevilMask size={55} color="red" />
+                </Grid.Col>
+              </Grid>
+              <Group spacing={"xs"} sx={{ marginTop: 15 }}>
+                <Button type="submit" mt="sm">
+                  Submit Candidate Form
+                </Button>
+                <Button type="submit" mt="sm" color="green">
+                  Update Candidate Form
+                </Button>
+                <Button type="submit" mt="sm" color="red">
+                  Cancel Candidate Form
+                </Button>
+              </Group>
+            </form>
+      </MantineProvider>
     </ColorSchemeProvider>
-  )
+  );
 }
 
-export default CandidateForm
+export default CandidateForm;
