@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from "react";
 import { AppShell, Navbar, Header, Footer, Aside, Text, MediaQuery, Burger, useMantineTheme } from '@mantine/core';
 import LightAndDarkModeButton from './LightDarkButton';
 // import TableExample from './TableExample';
@@ -6,7 +6,7 @@ import CandidateForm from './CandidateForm';
 
 function AppShellLayout() {
   const theme = useMantineTheme();
-  const [opened, setOpened] = useState(false);
+  const [opened, setOpened] = React.useState(false);
   return (
     <AppShell
       styles={{
@@ -14,42 +14,46 @@ function AppShellLayout() {
           background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
         },
       }}
+
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       navbar={
-        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 200 }}>
+        <Navbar className="navbar" p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+          <LightAndDarkModeButton />
           <Navbar.Section>
-            <Text>Greetings, this is the Title</Text>
+            <Text className="font-Color">Application Navbar</Text>
           </Navbar.Section>
-            <LightAndDarkModeButton />
           <Navbar.Section grow mt="lg" >
-            <Text>Example 1</Text>
-            <Text>Example 2</Text>
-            <Text>Example 3</Text>
-            <Text>Example 4</Text>
-            <Text>Example 5</Text>
+            <Text className="font-Color">Example 1</Text>
+            <Text className="font-Color">Example 2</Text>
+            <Text className="font-Color">Example 3</Text>
+            <Text className="font-Color">Example 4</Text>
+            <Text className="font-Color">Example 5</Text>
           </Navbar.Section>
           <Navbar.Section>
-            <Text>Footer</Text>
+            <Text className="font-Color">Footer</Text>
           </Navbar.Section>
         </Navbar>
       }
+
       aside={
         <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
-          <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 200 }}>
-            <Text>Application sidebar</Text>
+          <Aside className="sidebar" p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
+            <Text className="font-Color">Application sidebar</Text>
           </Aside>
         </MediaQuery>
       }
+
       footer={
-        <Footer height={60} p="md">
-          Application footer
+        <Footer className="footer" height={60} p="md">
+          <Text className="font-Color">Application footer</Text>
         </Footer>
       }
+
       header={
-        <Header height={70} p="md">
-          <div style={{ display: 'flex', justifyContent: "space-between" }}>
-            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+        <Header className="header" height={70} p="md">
+          <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+            <MediaQuery largerThan="sm" styles={{ display: "none" }}>
               <Burger
                 opened={opened}
                 onClick={() => setOpened((o) => !o)}
@@ -58,9 +62,7 @@ function AppShellLayout() {
                 mr="xl"
               />
             </MediaQuery>
-
-            <Text>Application header</Text>
-          <LightAndDarkModeButton />
+            <Text className="font-Color">Application header</Text>
           </div>
         </Header>
       }
