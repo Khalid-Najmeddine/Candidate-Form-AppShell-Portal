@@ -20,9 +20,9 @@ function App() {
     <div className="App">
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{colorScheme}}>
-        <Paper>
-        <AppShellLayout />
-        </Paper>
+      <Paper>
+      <AppShellLayout />
+      </Paper>
       </MantineProvider>
       </ColorSchemeProvider>
     </div>
