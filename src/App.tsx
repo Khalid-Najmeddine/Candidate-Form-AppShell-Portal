@@ -6,7 +6,6 @@ import AppShellDesign from "./components/AppShell/AppShellDesign";
 import "./styles.css";
 import React from "react";
 
-
 export default function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: "mantine-color-scheme",
