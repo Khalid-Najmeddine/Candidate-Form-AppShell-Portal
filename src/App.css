@@ -49,6 +49,16 @@
   color: cyan
 }
 
+.Candidates-Submitted {
+  display: flex;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-top: 3.0rem;
+  font-family: "Raleway", sans-serif;
+  color: cyan
+}
+
 .font-Color {
   color: cyan
 }
@@ -66,4 +76,51 @@
   display: flex;
   justify-content: center;
   margin-top: 1.0rem;
+}
+
+.periodic-table {
+  margin-top: 5.0rem;
+  color: cyan
+}
+
+.error-Message {
+  display: flex;
+  justify-content: center;
+}
+
+.Candidates-List-Page {
+  display: flex;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-top: 5.0rem;
+  font-family: "Raleway", sans-serif;
+  color: cyan
+}
+
+.Card-Transform-Values {
+  margin-top: 5.0rem;
+}
+
+.header-Headings {
+  display: flex;
+  justify-content: right;
+  font-size: 2.0rem;
+  font-weight: 600;
+  font-family: "Raleway", sans-serif;
+  color: cyan;
+}
+
+.Application-Header {
+  display: flex;
+  justify-content: left;
+  font-size: 2.0rem;
+  font-weight: 600;
+  font-family: "Raleway", sans-serif;
+  color: cyan;
+}
+
+.header-Image {
+  display: flex;
+  justify-content: left;
 }
