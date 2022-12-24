@@ -1,4 +1,5 @@
 import { ActionIcon, Anchor, Group, Paper, Text } from '@mantine/core'
+import React from 'react'
 import { TbArrowBack } from 'react-icons/tb'
 
 type CandidateFormTypes = {

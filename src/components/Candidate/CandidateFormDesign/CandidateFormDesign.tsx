@@ -3,6 +3,7 @@ import { forwardRef } from "react";
 import { useLocalStorage, useHotkeys } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
+import React from "react";
 
 enum EnumCandidateImmigrationStatusType {
   CanadianCitizen,
